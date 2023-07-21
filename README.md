@@ -1,2 +1,3 @@
 # roblox-account-group-checker
-a asynchronous group checker that checks the details of the accounts group u own.
+i made this fun little project in like 15-20 minutes.
+enter your roblox cookie in line 63 or roblox.py file to be able to capture group funds.
