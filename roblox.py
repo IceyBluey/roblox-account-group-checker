@@ -76,7 +76,7 @@ class Checker:
                     for group_data in groups_data:
                         if group_data['role']['rank'] == 255:
                             group_ids.append(group_data['group']['id'])
-            except (aiohttp.ClientError, json.JSONDecodeError):
+            except Exception:
                 pass
         return group_ids
 
@@ -88,7 +88,7 @@ class Checker:
                     group_name = data.get("name", "")
                     group_members = data.get("memberCount", 0)
                     return group_name, group_members
-            except (aiohttp.ClientError, json.JSONDecodeError):
+            except Exception:
                 return "", 0
 
     async def get_clothing_count(self, group_id):
@@ -117,7 +117,7 @@ class Checker:
                             params["cursor"] = cursor
                         else:
                             break
-                except:
+                except Exception:
                     return 0
 
             return total_clothing_count
@@ -129,7 +129,7 @@ class Checker:
                 async with session.get(f'https://economy.roblox.com/v1/groups/{group_id}/currency') as response:
                     data = await response.json()
                     group_funds = data.get("robux", 0)
-            except aiohttp.ClientError:
+            except Exception:
                 group_funds = 0
         return group_funds
 
@@ -142,7 +142,7 @@ class Checker:
                     data = await response.json()
                     pendingBobux = data.get("pendingRobux", 0)
 
-            except aiohttp.ClientError:
+            except Exception:
                 pendingBobux = 0
 
         return pendingBobux
@@ -154,7 +154,7 @@ class Checker:
                         f'https://games.roproxy.com/v2/groups/{group_id}/games?accessFilter=All&sortOrder=Asc&limit=100') as response:
                     data = await response.json()
                     games_data = data.get("data", [])
-            except aiohttp.ClientError:
+            except Exception:
                 games_data = []
 
         if not games_data:
@@ -173,7 +173,7 @@ class Checker:
                         f'https://games.roproxy.com/v2/groups/{group_id}/games?accessFilter=All&sortOrder=Asc&limit=100') as response:
                     data = await response.json()
                     games_data = data.get("data", [])
-            except aiohttp.ClientError:
+            except Exception:
                 games_data = []
 
         return len(games_data)
